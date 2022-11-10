@@ -8,48 +8,47 @@ nasday_data_link_api_key = os.environ['NASDAQ_DATA_LINK_API_KEY']
 nasdaqdatalink.ApiConfig.api_key = nasday_data_link_api_key
 pd.options.display.float_format = '{:,}'.format
 
-# get base info; to refresh, see import file
+# get fundamentals
 fund = pd.read_pickle('fundamentals.pkl')
 fin_pivot = fund.pivot(columns=["year"],values=["revenueusd", "opincusd", "netinccmnusd"])
 
 # add company info
 info = pd.read_pickle('company_info.pkl')
-fin_and_info = fin_pivot.merge(info, how='left', on='ticker')
+fund_and_info = fin_pivot.merge(info, how='left', on='ticker')
 
-# add market cap
+# add market caps
 daily = nasdaqdatalink.get_table('SHARADAR/DAILY', date='2022-11-09')
 daily_output = daily[[
     'ticker',
     'marketcap'
 ]]
 daily_output = daily_output.set_index(['ticker'])
-fin_merged = fin_and_info.merge(daily_output, how='left', on='ticker')
+merged = fund_and_info.merge(daily_output, how='left', on='ticker')
 
 # add valuation metrics
-fin_merged['p-opinc2010'] = fin_merged['marketcap'] / fin_merged[('opincusd', 2010)]
-fin_merged['p-opinc2021'] = fin_merged['marketcap'] / fin_merged[('opincusd', 2021)]
-fin_merged['p-netinc2021'] = fin_merged['marketcap'] / fin_merged[('netinccmnusd', 2021)]
-fin_merged['avginc17-21'] = (
-    fin_merged[('netinccmnusd', 2017)] + 
-    fin_merged[('netinccmnusd', 2018)] +
-    fin_merged[('netinccmnusd', 2019)] + 
-    fin_merged[('netinccmnusd', 2020)] +
-    fin_merged[('netinccmnusd', 2021)]
+merged['p-opinc2010'] = merged['marketcap'] / merged[('opincusd', 2010)]
+merged['p-opinc2021'] = merged['marketcap'] / merged[('opincusd', 2021)]
+merged['p-netinc2021'] = merged['marketcap'] / merged[('netinccmnusd', 2021)]
+merged['avginc17-21'] = (
+    merged[('netinccmnusd', 2017)] + 
+    merged[('netinccmnusd', 2018)] +
+    merged[('netinccmnusd', 2019)] + 
+    merged[('netinccmnusd', 2020)] +
+    merged[('netinccmnusd', 2021)]
 ) / 5
-fin_merged['p-5yravginc'] = fin_merged['marketcap'] / fin_merged['avginc17-21']
-fin_merged = fin_merged.round(0)
+merged['p-5yravginc'] = merged['marketcap'] / merged['avginc17-21']
+merged = merged.round(0)
 
 # run screen
-fin_screen = fin_merged[
-    (fin_merged['p-opinc2010'] < 10) &
-    (fin_merged['p-opinc2010'] > 0) &
-    (fin_merged['p-opinc2021'] < 8) &
-    (fin_merged['p-opinc2021'] > 0) &
-    (fin_merged['p-netinc2021'] < 10) &
-    (fin_merged['p-netinc2021'] > 0) &
-    (fin_merged['p-5yravginc'] < 10) &
-    (fin_merged['p-5yravginc'] > 0)
+screen = merged[
+    (merged['p-opinc2010'] < 10) &
+    (merged['p-opinc2010'] > 0) &
+    (merged['p-opinc2021'] < 8) &
+    (merged['p-opinc2021'] > 0) &
+    (merged['p-netinc2021'] < 10) &
+    (merged['p-netinc2021'] > 0) &
+    (merged['p-5yravginc'] < 10) &
+    (merged['p-5yravginc'] > 0)
 ]
-fin_screen = fin_screen.sort_index()
-fin_screen.to_excel('financials_screen.xlsx')
-# https://data.nasdaq.com/tables/SHARADAR-SF1/export?dimension=MRY&qopts.columns=ticker,calendardate,revenue,opinc&api_key=Za66XwxKqwNL-heRFEep
+screen = screen.sort_index()
+screen.to_excel('financials_screen.xlsx')
