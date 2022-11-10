@@ -1,5 +1,6 @@
 *roadmap.md
 *scratch-code.md
 *.xlsx
+*.pkl
 .env
 __pycache__

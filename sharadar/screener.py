@@ -17,13 +17,8 @@ info = pd.read_pickle('company_info.pkl')
 fund_and_info = fin_pivot.merge(info, how='left', on='ticker')
 
 # add market caps
-daily = nasdaqdatalink.get_table('SHARADAR/DAILY', date='2022-11-09')
-daily_output = daily[[
-    'ticker',
-    'marketcap'
-]]
-daily_output = daily_output.set_index(['ticker'])
-merged = fund_and_info.merge(daily_output, how='left', on='ticker')
+daily = pd.read_pickle('daily.pkl')
+merged = fund_and_info.merge(daily, how='left', on='ticker')
 
 # add valuation metrics
 merged['p-opinc2010'] = merged['marketcap'] / merged[('opincusd', 2010)]
