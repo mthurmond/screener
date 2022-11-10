@@ -2,3 +2,4 @@
 *scratch-code.md
 *.xlsx
 .env
+__pycache__

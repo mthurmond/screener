@@ -13,7 +13,7 @@ fund = pd.read_pickle('fundamentals.pkl')
 fin_pivot = fund.pivot(columns=["year"],values=["revenueusd", "opincusd", "netinccmnusd"])
 
 # add company info
-info = pd.read_excel('company_info.xlsx',index_col=0)
+info = pd.read_pickle('company_info.pkl')
 fin_and_info = fin_pivot.merge(info, how='left', on='ticker')
 
 # add market cap
