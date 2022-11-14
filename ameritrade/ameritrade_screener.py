@@ -17,7 +17,7 @@ def create_filename(prefix):
     return f_name
 
 # get screen data & format it; refresh excel by running queries in API files
-fundamentals = pd.read_excel('./ameritrade/fundamentals_11-4-2022.xlsx',index_col=0)
+fundamentals = pd.read_excel('fundamentals_11-4-2022.xlsx',index_col=0)
 
 financials = pd.read_excel('./polygon/financials_11-1-2022.xlsx', index_col=0)
 financials['opincome'] = financials['opincome'] / 1000000
@@ -27,11 +27,11 @@ financials['assets'] = financials['assets'] / 1000000
 financials['current_assets'] = financials['current_assets'] / 1000000
 financials['lt_assets'] = financials['assets'] - financials['current_assets']
 
-descriptions = pd.read_excel('./ameritrade/descriptions_11-4-2022.xlsx', index_col=0)
+descriptions = pd.read_excel('descriptions_11-4-2022.xlsx', index_col=0)
 
 details = pd.read_excel('./polygon/details_11-3-2022.xlsx', index_col=0)
 
-options = pd.read_excel('./ameritrade/options_11-3-2022.xlsx', index_col=0)
+options = pd.read_excel('options_11-3-2022.xlsx', index_col=0)
 
 # join dfs
 screen_data_df = fundamentals.merge(financials, how='left',on='symbol').merge(descriptions, how='left',on='symbol').merge(details, how='left', on='symbol').merge(options, how='left', on='symbol')
