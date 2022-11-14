@@ -5,15 +5,15 @@ load_dotenv()
 pd.options.display.float_format = '{:,}'.format
 
 # get fundamentals
-fund = pd.read_pickle('fundamentals.pkl')
+fund = pd.read_pickle('./import/fundamentals.pkl')
 fin_pivot = fund.pivot(columns=["year"],values=["revenueusd", "opincusd", "netinccmnusd"])
 
 # add company info
-info = pd.read_pickle('company_info.pkl')
+info = pd.read_pickle('./import/company_info.pkl')
 fund_and_info = fin_pivot.merge(info, how='left', on='ticker')
 
 # add market caps
-daily = pd.read_pickle('daily.pkl')
+daily = pd.read_pickle('./import/daily.pkl')
 merged = fund_and_info.merge(daily, how='left', on='ticker')
 
 # add valuation metrics
@@ -42,4 +42,4 @@ screen = merged[
     (merged['p-5yravginc'] > 0)
 ]
 screen = screen.sort_index()
-screen.to_excel('../output/financials_screen.xlsx')
+screen.to_excel('./output/value_screen.xlsx')
