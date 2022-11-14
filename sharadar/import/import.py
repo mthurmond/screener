@@ -30,19 +30,30 @@ def get_company_info():
 
 def get_fundamentals():
     # import data for listed symbols, format, then export
-    fund = nasdaqdatalink.get_table('SHARADAR/SF1', dimension='MRY', ticker=symbols, qopts={"columns":['ticker', 'calendardate', 'revenueusd', 'opinc', 'netinccmnusd', 'fxusd']}, paginate=True)
+    fund = nasdaqdatalink.get_table('SHARADAR/SF1', dimension='MRY', ticker=symbols, qopts={"columns":['ticker', 'calendardate', 'revenueusd', 'opinc', 'netinccmnusd', 'fcf', 'fxusd']}, paginate=True) 
+
     fund = fund.set_index(['ticker'])
     fund['year'] = fund['calendardate'].dt.year
     fund['revenueusd'] = fund['revenueusd'] / 1000000
     fund['opinc'] = fund['opinc'] / 1000000
-    fund['netinccmnusd'] = fund['netinccmnusd'] / 1000000
     fund['opincusd'] = fund['opinc'] / fund['fxusd']
+    fund['netinccmnusd'] = fund['netinccmnusd'] / 1000000
+    fund['fcf'] = fund['fcf'] / 1000000
+    fund['fcfusd'] = fund['fcf'] / fund['fxusd']
+    fund['ncfbus'] = fund['ncfbus'] / 1000000
+    fund['ncfbususd'] = fund['ncfbus'] / fund['fxusd']
+    fund['intexp'] = fund['intexp'] / 1000000
+    fund['intexpusd'] = fund['intexp'] / fund['fxusd']
+    print(fund)
     fund.to_pickle('fundamentals.pkl')
+
+    # add these metrics for each ticker (i.e. to each row) after pivoting
+    # 'ncfbus', 'intexp', 'de', 'roic'
 
 # Read pickle files only to do specific formatting, then resave
     # info = pd.read_pickle('company_info.pkl')
     # fund = pd.read_pickle('fundamentals.pkl')
 
-get_daily()
-get_company_info()
+# get_daily()
+# get_company_info()
 get_fundamentals()
