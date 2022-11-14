@@ -1,11 +1,7 @@
-import nasdaqdatalink
 import pandas as pd
-import os
 from dotenv import load_dotenv
 load_dotenv()
 
-nasday_data_link_api_key = os.environ['NASDAQ_DATA_LINK_API_KEY']
-nasdaqdatalink.ApiConfig.api_key = nasday_data_link_api_key
 pd.options.display.float_format = '{:,}'.format
 
 # get fundamentals
@@ -46,4 +42,4 @@ screen = merged[
     (merged['p-5yravginc'] > 0)
 ]
 screen = screen.sort_index()
-screen.to_excel('financials_screen.xlsx')
+screen.to_excel('../output/financials_screen.xlsx')

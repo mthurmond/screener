@@ -8,7 +8,7 @@ nasdaqdatalink.ApiConfig.api_key = nasday_data_link_api_key
 pd.options.display.float_format = '{:,}'.format
 
 def get_daily():
-    daily = nasdaqdatalink.get_table('SHARADAR/DAILY', date='2022-11-09')
+    daily = nasdaqdatalink.get_table('SHARADAR/DAILY', date='2022-11-11')
     daily = daily[[
         'ticker',
         'marketcap'
