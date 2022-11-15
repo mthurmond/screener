@@ -40,15 +40,22 @@ def get_fundamentals():
     fund['netinccmnusd'] = fund['netinccmnusd'] / 1000000
     fund['fcf'] = fund['fcf'] / 1000000
     fund['fcfusd'] = fund['fcf'] / fund['fxusd']
-    fund['ncfbus'] = fund['ncfbus'] / 1000000
-    fund['ncfbususd'] = fund['ncfbus'] / fund['fxusd']
-    fund['intexp'] = fund['intexp'] / 1000000
-    fund['intexpusd'] = fund['intexp'] / fund['fxusd']
-    print(fund)
-    fund.to_pickle('fundamentals.pkl')
+    fund = fund.pivot(columns=["year"],values=["revenueusd", "opincusd", "netinccmnusd", 'fcfusd'])
 
-    # add these metrics for each ticker (i.e. to each row) after pivoting
-    # 'ncfbus', 'intexp', 'de', 'roic'
+    # add metrics where only most recent datapoint needed
+    recent = nasdaqdatalink.get_table('SHARADAR/SF1', dimension='MRY', ticker=symbols, qopts={'latest':1, "columns":['ticker', 'intexp', 'ebit', 'roic']}, paginate=True)
+    recent = recent.set_index(['ticker'])
+    recent['intexp-ebit'] = recent['intexp'] / recent['ebit']
+    recent['intexp-ebit'] = recent['intexp-ebit'] * 100
+    recent['roic'] = recent['roic'] * 100
+    recent = recent[[
+        'intexp-ebit',
+        'roic'
+    ]]
+
+    # merge recent point metrics into pivot table and export
+    fund = fund.merge(recent, how='left', on='ticker')
+    fund.to_pickle('fundamentals.pkl')
 
 # Read pickle files only to do specific formatting, then resave
     # info = pd.read_pickle('company_info.pkl')

@@ -6,11 +6,10 @@ pd.options.display.float_format = '{:,}'.format
 
 # get fundamentals
 fund = pd.read_pickle('./import/fundamentals.pkl')
-fin_pivot = fund.pivot(columns=["year"],values=["revenueusd", "opincusd", "netinccmnusd", 'fcfusd'])
 
 # add company info
 info = pd.read_pickle('./import/company_info.pkl')
-fund_and_info = fin_pivot.merge(info, how='left', on='ticker')
+fund_and_info = fund.merge(info, how='left', on='ticker')
 
 # add market caps
 daily = pd.read_pickle('./import/daily.pkl')
