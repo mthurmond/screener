@@ -2,5 +2,6 @@
 *scratch-code.md
 *.xlsx
 *.pkl
+symbols_portfolio.py
 .env
 __pycache__
