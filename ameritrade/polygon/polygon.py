@@ -4,8 +4,6 @@ import os
 from symbols_list_copy import symbols
 
 polygon_key = os.environ['POLYGON_API_KEY']
-
-polygon_key = 'lA4S9f8CnDuPhIjuBGvsKzmHdNk1ibf9'
 polygon_financials_url = 'https://api.polygon.io/vX/reference/financials'
 polygon_tickers_url = 'https://api.polygon.io/v3/reference/tickers/'
 
@@ -100,7 +98,7 @@ def get_comp_details(symbols):
 # can refactor code above so I make fewer queries by using query parameters
 
 def get_financials_multi_ticker():
-	payload = {'apikey': 'lA4S9f8CnDuPhIjuBGvsKzmHdNk1ibf9',
+	payload = {'apikey': polygon_key,
 				'include_sources': 'false',
 				'period_of_report_date.gte': '2022-06-01',
 				'period_of_report_date.lte': '2022-09-01',
@@ -114,6 +112,6 @@ def get_financials_multi_ticker():
 # financials_resp = get_financials_multi_ticker()
 
 # example query parameters
-# https://api.polygon.io/v3/reference/tickers?ticker.gte=A&ticker.lt=B&active=true&sort=ticker&order=asc&limit=10&apiKey=lA4S9f8CnDuPhIjuBGvsKzmHdNk1ibf9
+# https://api.polygon.io/v3/reference/tickers?ticker.gte=A&ticker.lt=B&active=true&sort=ticker&order=asc&limit=10&apiKey=
 
-# https://api.polygon.io/vX/reference/financials?period_of_report_date.gte=2022-06-01&period_of_report_date.lte=2022-09-01&limit=30&timeframe=annual&order=asc&limit=10&apiKey=lA4S9f8CnDuPhIjuBGvsKzmHdNk1ibf9
+# https://api.polygon.io/vX/reference/financials?period_of_report_date.gte=2022-06-01&period_of_report_date.lte=2022-09-01&limit=30&timeframe=annual&order=asc&limit=10&apiKey=
