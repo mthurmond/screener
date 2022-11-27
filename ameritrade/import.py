@@ -3,10 +3,9 @@ import pandas as pd
 import os
 from dotenv import load_dotenv
 load_dotenv()
+from symbols_list_copy import symbols
 
-# pull symbols from excel file
-us_symbols_df = pd.read_excel('../symbols/symbols_current.xlsx')
-us_symbols_list = us_symbols_df['symbol'].values.tolist()
+us_symbols_list = symbols
 
 ameritrade_instruments_url = 'https://api.tdameritrade.com/v1/instruments'
 ameritrade_option_chains_url = 'https://api.tdameritrade.com/v1/marketdata/chains'
@@ -112,8 +111,8 @@ def get_options_vol(symbols):
 # fundamentals_df = get_fundamentals(us_symbols_list)
 # fundamentals_df.to_excel('fundamentals_11-4-2022.xlsx')
 
-# descriptions_df = get_descriptions(us_symbols_list)
-# descriptions_df.to_excel('descriptions_11-4-2022.xlsx')
+descriptions_df = get_descriptions(us_symbols_list)
+descriptions_df.to_excel('descriptions_11-4-2022.xlsx')
 
 # options_vol_df = get_options_vol(us_symbols_list)
 # options_vol_df.to_excel('options_11-4-2022.xlsx')
