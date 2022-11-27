@@ -1,12 +1,15 @@
 import requests
 import pandas as pd
+import os
+from symbols_list_copy import symbols
+
+polygon_key = os.environ['POLYGON_API_KEY']
 
 polygon_key = 'lA4S9f8CnDuPhIjuBGvsKzmHdNk1ibf9'
 polygon_financials_url = 'https://api.polygon.io/vX/reference/financials'
 polygon_tickers_url = 'https://api.polygon.io/v3/reference/tickers/'
 
-us_symbols_df = pd.read_excel('../symbols/symbols_current.xlsx')
-us_symbols_list = us_symbols_df['symbol'].values.tolist()
+us_symbols_list = symbols
 
 def get_financials(symbols):
 	# pull operating income from polygon for all symbols
