@@ -27,13 +27,13 @@ merged = merged.round(0)
 screen = merged[
     (merged['p-opinc2010'] < 10) &
     (merged['p-opinc2010'] > 0) &
-    (merged['p-opinc2021'] < 8) &
+    (merged['p-opinc2021'] < 10) &
     (merged['p-opinc2021'] > 0) &
-    (merged['p-netinc2021'] < 10) &
+    (merged['p-netinc2021'] < 15) &
     (merged['p-netinc2021'] > 0) &
-    (merged['p-5yravginc'] < 10) &
+    (merged['p-5yravginc'] < 12) &
     (merged['p-5yravginc'] > 0) &
-    (merged['p-5yravgfcf'] < 10) &
+    (merged['p-5yravgfcf'] < 12) &
     (merged['p-5yravgfcf'] > 0) &
     (merged['intexp-ebit'] < 40)
 ]

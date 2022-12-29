@@ -108,11 +108,11 @@ def get_options_vol(symbols):
 	df = df.set_index('symbol')
 	return df
 
-# fundamentals_df = get_fundamentals(us_symbols_list)
-# fundamentals_df.to_excel('fundamentals_11-4-2022.xlsx')
+fundamentals_df = get_fundamentals(us_symbols_list)
+fundamentals_df.to_excel('fundamentals_12-1-2022.xlsx')
 
-descriptions_df = get_descriptions(us_symbols_list)
-descriptions_df.to_excel('descriptions_11-4-2022.xlsx')
+# descriptions_df = get_descriptions(us_symbols_list)
+# descriptions_df.to_excel('descriptions_11-4-2022.xlsx')
 
 # options_vol_df = get_options_vol(us_symbols_list)
 # options_vol_df.to_excel('options_11-4-2022.xlsx')

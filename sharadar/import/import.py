@@ -18,7 +18,7 @@ def get_daily():
     daily.to_pickle('daily.pkl')
 
 def get_company_info():
-    info = nasdaqdatalink.get_table('SHARADAR/TICKERS', table='SF1', qopts={"columns":['ticker', 'name', 'exchange', 'famaindustry', 'sector', 'companysite', 'isdelisted']}, paginate=True)
+    info = nasdaqdatalink.get_table('SHARADAR/TICKERS', table='SF1', qopts={"columns":['ticker', 'name', 'exchange', 'famaindustry', 'sector', 'location', 'companysite', 'isdelisted']}, paginate=True)
 
     # filter out delisted stocks, then format table
     info = info[
@@ -150,6 +150,6 @@ def get_fundamentals():
     # info = pd.read_pickle('company_info.pkl')
     # fund = pd.read_pickle('fundamentals.pkl')
 
-# get_daily()
+# # get_daily()
 # get_company_info()
 get_fundamentals()

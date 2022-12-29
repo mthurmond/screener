@@ -17,7 +17,7 @@ def create_filename(prefix):
     return f_name
 
 # get screen data & format it; refresh excel by running queries in API files
-fundamentals = pd.read_excel('fundamentals_11-4-2022.xlsx',index_col=0)
+fundamentals = pd.read_excel('fundamentals_12-1-2022.xlsx',index_col=0)
 
 financials = pd.read_excel('./polygon/financials_11-1-2022.xlsx', index_col=0)
 financials['opincome'] = financials['opincome'] / 1000000
